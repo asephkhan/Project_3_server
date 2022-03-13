@@ -5,14 +5,25 @@ const mongoose = require('mongoose');
 
 
 
-
-router.get('/', (req, res) => {
-    res.send('we are on city')
+// Get /cities- get all the existing cities
+router.get('/city', (req, res) => {
+   
 });
 
-router.post('/', (req, res, next) => {
-    const { cityName, locations, thingsToDo, image, weather } = req.body; 
-    console.log(req.body);
+// Post /cities- create a new city
+router.post('/city',  async (req, res, next) => {
+    try{
+        //get the data from req.body
+        const { cityName, locations, thingsToDo, image, weather } = req.body; 
+        console.log(req.body);
+
+        // save the data in the database
+        const createdCity = await City.create({cityName, locations, thingsToDo, image, weather})
+        res.status(201).json(createdCity);
+    } catch (error) {
+        res.status(500).json(error); // Internal Server Error
+      }
+   
 }); 
 
 module.exports = router;

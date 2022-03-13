@@ -35,11 +35,11 @@ app.use('/auth', authRoutes);
 
 // flight route
 const flightRoutes = require('./routes/flight.routes');
-app.use('/api', flightRoutes);
+app.use('/', flightRoutes);
 
 // city route
 const cityRoutes = require('./routes/city.routes');
-app.use('/api', cityRoutes);
+app.use('/', cityRoutes);
 
 // trip route
 const tripRoutes = require('./routes/trip.routes');

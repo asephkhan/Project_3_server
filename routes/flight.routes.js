@@ -1,22 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const Flight = require('../models/Flight.model'); 
+const City = require('../models/City.model')
 const mongoose = require('mongoose');
 
 
 
-
-router.get('/flight', (req, res) => {
-    res.send('we are on flight')
+// Get /flight - get all the existing flights
+router.get('/flight', async (req, res) => {
+    try {
+        const allFlights = awiat Flight.find();
+        res.status(200).json(allFlights);
+    }catch (error) {
+		res.status(500).json(error);
+	}
+    
 });
 
-router.post('/flight', (req, res, next) => {
-    const{ type, origin, departureDate, returnDate, price } = req.body;  
-    console.log(req.body);
+// P0st /flight - create a flight
+router.post('/flight', async (req, res, next) => {
 
-    Project.create({ type, origin, departureDate, returnDate, price, destination: [] })
-    .then((response) => res.json(response))
-    .catch((err) => next(err));
+    try{
+        const{ type, origin, departureDate, returnDate, price } = req.body; 
+        console.log(req.body);
+    }
+
+// save in the database
+const createdFlight = Flight.create({ type, origin, departureDate, returnDate, price, city })
+      
+    console.log(createdFlight);
+
+    
+    
 });
 
 module.exports = router;
