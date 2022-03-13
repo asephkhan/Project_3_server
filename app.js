@@ -11,6 +11,11 @@ const express = require("express");
 
 const app = express();
 
+// body parser
+/* const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());  */
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
@@ -18,6 +23,27 @@ require("./config")(app);
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
+
+// home route
+app.get('/', (req, res) => {
+    res.send('we are home');
+});
+
+// auth route
+const authRoutes = require('./routes/auth.routes');
+app.use('/auth', authRoutes);
+
+// flight route
+const flightRoutes = require('./routes/flight.routes');
+app.use('/api', flightRoutes);
+
+// city route
+const cityRoutes = require('./routes/city.routes');
+app.use('/api', cityRoutes);
+
+// trip route
+const tripRoutes = require('./routes/trip.routes');
+app.use('/api', tripRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
