@@ -3,9 +3,9 @@ const router = express.Router();
 const Flight = require('../models/Flight.model'); 
 const City = require('../models/City.model')
 const mongoose = require('mongoose');
-const Amadeus = require('amadeus')
+/* const Amadeus = require('amadeus') */
 
-
+/* 
 // Getting env variables 
  const { CLIENT_ID, CLIENT_SECRET } = require('../config/dotenv');   
 const API = `api`;
@@ -29,7 +29,7 @@ router.get(`/${API}/airports`, async (req, res) => {
   } catch (err) {
     await res.json(err);
   }
-});
+}); */
 
 // Get /flight - get all the existing flights
 /* router.get('/flight', async (req, res) => {
@@ -43,18 +43,24 @@ router.get(`/${API}/airports`, async (req, res) => {
 }); */
 
 // P0st /flight - create a flight
-/* router.post('/flight', async (req, res, next) => {
+ router.post('/flight', async (req, res, next) => {
 
     try{
         const{ type, origin, departureDate, returnDate, price } = req.body; 
         console.log(req.body);
 
+
+        // save in the database
         const createdFlight = Flight.create({ type, origin, departureDate, returnDate, price, city })
-      
-    console.log(createdFlight);
-    }});
- */
-// save in the database
+         console.log(createdFlight);
+    }catch (error) {
+      res.status(500).json(error); // Internal Server Error
+    }
+    
+    
+  });
+ 
+
 
 
 module.exports = router;

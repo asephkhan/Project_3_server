@@ -8,13 +8,13 @@ const flightSchema = new Schema({
   departureTime: { type: String },
   returnDate: { type: String },
   price: { total: String }, 
-  destination: [{type: Schema.Types.ObjectId, ref: 'City'}], 
+  /* destination: [{type: Schema.Types.ObjectId, ref: 'City'}],  */
 
-  links: {
+ /*  links: {
   flightDates:{ type: String},
   flightOffers:{ type: String},
    }
- 
+  */
 });
 
 
