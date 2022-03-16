@@ -2,20 +2,28 @@ const express = require('express');
 const router = express.Router();
 const Trip = require('../models/Trip.model') 
 const mongoose = require('mongoose');
+const User = require('../models/User.model');
 
 
  router.get('/trip', (req, res) => {
-    Trip.find()
-    .then((response) => res.json(response))
+  const { _id } = req.payload;
+
+    User.findById(_id)
+    .populate('trips')
+    .then((response) => res.json(response.trips))
     .catch((err) => next(err));
 });
  
 router.post('/trip', (req, res, next) => {
     const{ name, place, days } = req.body; 
+    const { _id } = req.payload;
     
     
     Trip.create({ name, place, days})
-    .then((response) => res.json(response))
+    .then((response) => {
+      return User.findByIdAndUpdate(_id, {$push:{trips: response._id}})
+    })
+    .then(response => res.json(response))
     .catch((err) => next(err));
 
  
