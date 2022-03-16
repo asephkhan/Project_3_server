@@ -22,7 +22,21 @@ router.post('/trip', (req, res, next) => {
  
 });
 
-router.put('/trip/:tripId', (req, res, next) => {
+router.get('/trips/:tripId', (req,res,next) => {
+  const { tripId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(tripId)) {
+    res.status(400).json({ message: 'Specified Id is not valid' });
+    return;
+  }
+  Trip.findById(tripId)
+  .then((response) => res.json(response))
+  .catch((err) => res.json(err));
+});
+
+
+
+router.put('/trips/:tripId', (req, res, next) => {
     const { tripId } = req.params;
   
     if (!mongoose.Types.ObjectId.isValid(tripId)) {
@@ -34,5 +48,22 @@ router.put('/trip/:tripId', (req, res, next) => {
       .then((response) => res.json(response))
       .catch((err) => res.json(err));
   });
+
+  router.delete('/trips/:tripId', (req, res) => {
+    const { tripId } = req.params;
+ 
+    if (!mongoose.Types.ObjectId.isValid(tripId)) {
+      res.status(400).json({ message: 'Specified Id is not valid' });
+      return;
+    }
+
+    Trip.findByIdAndRemove(tripId)
+    .then(() => res.json({ message: `Trip with ${tripId} was removed successfully` }))
+    .catch((err) => res.json(err));
+
+
+  });
+
+ 
 
 module.exports = router;
