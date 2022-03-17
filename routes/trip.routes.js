@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Trip = require('../models/Trip.model') 
+const Trip = require('../models/Trip.model')
+const Todo = require('../models/Todo.model'); 
 const mongoose = require('mongoose');
 const User = require('../models/User.model');
 
@@ -10,7 +11,7 @@ const User = require('../models/User.model');
 
     User.findById(_id)
     .populate('trips')
-    .then((response) => res.json(response.trips))
+    .then((response) => res.json(response.trips ))
     .catch((err) => next(err));
 });
  
@@ -37,6 +38,7 @@ router.get('/trips/:tripId', (req,res,next) => {
     return;
   }
   Trip.findById(tripId)
+  .populate("thingsToDo")
   .then((response) => res.json(response))
   .catch((err) => res.json(err));
 });

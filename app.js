@@ -34,11 +34,13 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/auth.routes');
 app.use('/auth', authRoutes);
 
-
+// todo route
+const todoRoutes = require('./routes/todo.routes');
+app.use('/', todoRoutes);
 
 // trip route
 const tripRoutes = require('./routes/trip.routes');
-app.use('/', isAuthenticated, tripRoutes);
+app.use('/',  isAuthenticated,  tripRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

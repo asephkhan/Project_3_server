@@ -4,7 +4,8 @@ const { Schema, model } = require("mongoose");
 const tripSchema = new Schema({
   name : String,
   place : String,
-  days : Number
+  days : Number,
+  thingsToDo: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
 });
 
 
